@@ -1,6 +1,7 @@
 # Quake-Live-Rcon
 
 This is my attempt at making an easy to use Remote Console Program for Quake Live.
+It is for Windows 64 bit systems.
 
 Download the QuakeLiveRcon.zip and put the 2 files into the same folder.
 I put mine in my Quake Live baseq3 and made a shortcut on my desktop.
