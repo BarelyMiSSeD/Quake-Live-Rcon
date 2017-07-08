@@ -1,9 +1,11 @@
 # Quake-Live-Rcon
 
 This is my attempt at making an easy to use Remote Console Program for Quake Live.
-It is for Windows 64 bit systems.
+QuakeLiveRcon_x64.zip is for Windows 64 bit systems.
+QuakeLiveRcon_x86.zip is for Windows 32 bit systems.
 
-Download the QuakeLiveRcon.zip and put the 2 files into the same folder.
+
+Download the desired QuakeLiveRcon_x**.zip and put the 2 files into the same folder.
 I put mine in my Quake Live baseq3 and made a shortcut on my desktop.
 
 The QuakeLiveRcon.exe is the file I made, the libzmq.dll is the communications protocol 0mq
@@ -28,7 +30,8 @@ Enter the commands on the command entry line and hit enter to send.
 The Up/Down arrows will scroll through the last 10 commands sent so they can be resent without having to type them again.
 This will be different for each server tab.
 
-The program will connect to up-to 20 servers at the same time. I wouldn't connect to that many at once though. My machine uses about 12% processor for each active server connection. I am going to see if I can get the CPU usage down, hopefully I will be able to, btu I am still pretty new to this programming thing. :-)
+The program will connect to up-to 20 servers at the same time. I don't have 20 servers to connect to, so let me know how it works
+connected to a lot of servers.
 
 I have plans to add a logging feature for teh servers so you will be able to log info from the servers you would like to.
 
