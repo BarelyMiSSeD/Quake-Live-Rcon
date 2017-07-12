@@ -3,11 +3,11 @@
 Previous Versions: https://github.com/BarelyMiSSeD/Old_Quake_Live_RCON
 
 This is my attempt at making an easy to use Remote Console Program for Quake Live.
-QuakeLiveRcon_x64_****.zip is for Windows 64 bit systems.
-QuakeLiveRcon_x86_****.zip is for Windows 32 bit systems.
+QuakeLiveRcon_x64_\*.\*.\*.\*.zip is for Windows 64 bit systems.
+QuakeLiveRcon_x86_\*.\*.\*.\*.zip is for Windows 32 bit systems.
 
 
-Download the desired QuakeLiveRcon_x**_****.zip and put the 2 files into the same folder.
+Download the desired QuakeLiveRcon_x\*\*_\*.\*.\*.\*.zip and put the 2 files into the same folder.
 I put mine in my Quake Live baseq3 and made a shortcut on my desktop.
 
 The QuakeLiveRcon.exe is the file I made, the libzmq.dll is the communications protocol 0mq
