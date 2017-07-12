@@ -42,7 +42,7 @@ Clicking the Settings button will bring up the settings window. This window show
 - The Enable 'Connect to Game Server' button will allow you to connect to game servers that you are connected to the RCON.
 <br><br>
 
-The server output will display the special characters you see used by players in the server. This does cause a little bit of a slow display of names whe the 'status' command is entered. This will not make the output window lose any information sent from the server.
+The server output will display the special characters you see used by players in the server. This does cause a little bit of a slow display of names when the 'status' command is entered. This will not make the output window lose any information sent from the server.
 
 The program will connect to up-to 20 servers at the same time.
 
