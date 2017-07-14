@@ -43,7 +43,7 @@ Clicking the Settings button will bring up the settings window. This window show
 - The Enable stripping color codes from Log File will strip the Quake style color codes from the logged information. The color codes are left in the log file if not enabled.
 <br><br>
 
-The server output will display the special characters you see used by players in the server. This does cause a little bit of a slow display of names when the 'status' command is entered. This will not make the output window lose any information sent from the server.
+The server output will display the special characters you see used by players in the server and will display color when Quake Style color coding is sent by the server.
 
 The program will connect to up-to 20 servers at the same time.
 
