@@ -40,6 +40,7 @@ Clicking the Settings button will bring up the settings window. This window show
 - The 'send status Command on Connect to each server' will send a status command automatically when sucessful server registration is completed.
 - There are 6 configurable command button avaiable for use. Each button must be activated to be used. The 'Button Label' field is what you will see on the button when clicking on it. The 'Button Comand' field is the command will be sent to the server. (<I>Note: The format and spelling of the command is NOT checked before sending. Makse sure you enter the command exactly as the server requires.</I>)
 - The Enable 'Connect to Game Server' button will allow you to connect to game servers that you are connected to the RCON.
+- The Enable stripping color codes from Log File will strip the Quake style color codes from the logged information. The color codes are left in the log file if not enabled.
 <br><br>
 
 The server output will display the special characters you see used by players in the server. This does cause a little bit of a slow display of names when the 'status' command is entered. This will not make the output window lose any information sent from the server.
