@@ -35,12 +35,18 @@ The Up/Down arrows will scroll through the last 10 commands sent so they can be 
 This will be different for each server tab.
 
 <b>Settings:</b> (Settings here will apply to all servers)
-Clicking the Settings button will bring up the settings window. This window shows the current version of the program and has a link to the Github website where the file is avaiable.
+Clicking the Settings button will bring up the settings window. This window shows the current version of the program and has a link to the Github website where the file is avaiable.<br>
 
-- The 'send status Command on Connect to each server' will send a status command automatically when sucessful server registration is completed.
-- There are 6 configurable command button avaiable for use. Each button must be activated to be used. The 'Button Label' field is what you will see on the button when clicking on it. The 'Button Comand' field is the command will be sent to the server. (<I>Note: The format and spelling of the command is NOT checked before sending. Makse sure you enter the command exactly as the server requires.</I>)
-- The Enable 'Connect to Game Server' button will allow you to connect to game servers that you are connected to the RCON.
-- The Enable stripping color codes from Log File will strip the Quake style color codes from the logged information. The color codes are left in the log file if not enabled.
+-<b><u>The 'send status Command on Connect to each server' option</u></b> will send a status command automatically when sucessful server registration is completed.<br>
+-<b><u>The Enable 'Connect to Game Server' option</u></b> will allow you to connect to game servers that have an active RCON connection.<br>
+-<b><u>The 'Keep Computer from entering any sleep mode' option</u></b> will keep the computer in a state that will allow it to continue to communicate with servers. This option will still allow the monitor to go into any screensaver mode that is set. Once all server tabs are closed or the program is exited settings will be returned to normal.<br>
+-<b><u>There are 6 configurable command buttons</u></b> avaiable for use. Each button must be activated to be used. The 'Button Label' field is what you will see on the button when clicking on it. The 'Button Comand' field is the command that will be sent to the server. (Note: The format and spelling of the command is NOT checked before sending. Make sure you enter the command exactly as the server requires.) (To send MINQLX bot commands preface the command normally sent on the server with a 'qlx' for example: '!elos' would be 'qlx !elos')<br>
+-<b><u>The 'Disable Auto Scroll' option</u></b> will stop the scrolling of the server output window. This is to allow the reading of the window while still connected to the server. This option can be disabled and re-enabled while connected to servers.<br>
+-<b><u>The Maximum Amount of Lines allowed option</u></b> will set the server output windows maximum lines. When this line amount is reached the [b][u]amount of lines to remove</u></b> setting will be used to trim the earlier messages before continuing to print messages to the window. This will continue to happen each time the maximun lines setting is reached.<br>
+-<b><u>The 'Quake Live Colors' settings page</u></b> is where the colors used in the server output window to represent the color coding in Quake Live can be set. This will allow the configuring of the colors to individual preferences.<br>
+-<b><u>The 'Enable Logging' option</u></b> is on by default. It will allow the disabling of all server logging from a single setting. This setting must be enabled to allow individual server logging.<br>
+-<b><u>The Enable stripping color codes from Log File</u></b> will strip the Quake style color codes from the logged information. The color codes are left in the log file if not enabled. <br>
+
 <br><br>
 
 The server output will display the special characters you see used by players in the server and will display color when Quake Style color coding is sent by the server.
