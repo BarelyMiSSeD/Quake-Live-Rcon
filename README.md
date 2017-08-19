@@ -12,6 +12,7 @@ I put mine in my Quake Live baseq3 and made a shortcut on my desktop.
 
 The QuakeLiveRcon.exe is the file I made, the libzmq.dll is the communications protocol 0mq
 that Quake Live Servers use. It can be found at: http://www.zeromq.org
+The Newtonsoft.Json.dll file is for parsing some information from the server, the file can be downloaded at: https://www.newtonsoft.com/json
 
 When you run the program you will have to add servers to it. Click on 'Edit Servers'
 and enter your servers. When servers are save a file named QuakeLiveServers.ini will be 
