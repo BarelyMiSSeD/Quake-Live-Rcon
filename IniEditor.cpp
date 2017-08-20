@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -14,21 +14,12 @@ IniEditor::IniEditor() {
 	this->lpFileName = nullptr;
 }
 IniEditor::IniEditor(char fileName[]) {
-	//char * path;
-	//path = _getcwd(NULL, 0);
-	//this->lpFileName = gcnew String(path) + "\\" + gcnew String(fileName);
 	this->lpFileName = ".\\" + gcnew String(fileName);
 }
 IniEditor::IniEditor(const char *fileName) {
-	//char * path;
-	//path = _getcwd(NULL, 0);
-	//this->lpFileName = gcnew String(path) + "\\" + gcnew String(fileName);
 	this->lpFileName = ".\\" + gcnew String(fileName);
 }
 IniEditor::IniEditor(String^ fileName) {
-	//char * path;
-	//path = _getcwd(NULL, 0);
-	//this->lpFileName = gcnew String(path) + "\\" + fileName;
 	this->lpFileName = ".\\" + fileName;
 }
 
@@ -48,18 +39,12 @@ void IniEditor::setFilePath(String^ filePath) {
 
 void IniEditor::setFileName(const char *fileName) {
 	if (fileName != NULL) {
-		//char * path;
-		//path = _getcwd(NULL, 0);
-		//this->lpFileName = gcnew String(path) + "\\" + gcnew String(fileName);
 		this->lpFileName = ".\\" + gcnew String(fileName);
 	}
 }
 
 void IniEditor::setFileName(String^ fileName) {
 	if (!String::IsNullOrEmpty(fileName)) {
-		//char * path;
-		//path = _getcwd(NULL, 0);
-		//this->lpFileName = gcnew String(path) + "\\" + fileName;
 		this->lpFileName = ".\\" + fileName;
 	}
 }

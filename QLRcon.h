@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -22,7 +22,6 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 #include "Commands.h"
 #include <zmq.h>
 #include "msclr\marshal.h"
-//#include <assert.h>     /* assert */
 
 #define POLL_TIMEOUT 1
 #define EVENT_ARRAY_SIZE 11
@@ -55,7 +54,6 @@ namespace QuakeLiveRcon {
 
 
 	public: delegate void ObjectArgReturningVoidDelegate(int tab, String^ text);
-			//public: delegate void ObjectArgReturningVoidDelegate(Object^ line);
 	public: delegate void MessageArgReturningVoidDelegate(int tab, String^ text);
 
 	private:

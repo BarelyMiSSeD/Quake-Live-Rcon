@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -14,10 +14,6 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 
 #include "msclr\marshal.h"
 #include "zmq.h"
-//#include "zhelpers.h"
-#include <assert.h>     /* assert */
-
-//#define POLL_TIMEOUT 1
 
 namespace QuakeLiveRcon {
 
@@ -37,7 +33,6 @@ namespace QuakeLiveRcon {
 	private:
 		bool disconnect; //used to signal shutdown
 		array<System::String^>^ info; //used to store the server information and colors
-		//this->info[0] is the IP; this->info[1] is the Game Port; this->info[2] is the Password; this->info[3] is the UUID; this->info[4] thru this->info[12] are the Colors
 		Thread^ statusThread; //thread used for the server communications
 
 	public:

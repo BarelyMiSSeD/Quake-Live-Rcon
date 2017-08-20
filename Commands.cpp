@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -11,9 +11,6 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 
 QuakeLiveRcon::Commands::Commands(const char *file, int tab) {
 	InitializeComponent();
-	//
-	//TODO: Add the constructor code here
-	//
 	
 	this->ini = gcnew IniEditor(file);
 	this->tab = tab;
@@ -36,7 +33,6 @@ System::Void QuakeLiveRcon::Commands::close_Click(System::Object^  sender, Syste
 
 System::Void QuakeLiveRcon::Commands::commandList_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 	this->selectedLine = this->commandList->SelectedIndex;
-	//this->commandText = gcnew String(this->ini->getValue("comands", System::Convert::ToString(this->selectedLine)));
 	this->commandText = this->commandList->Text;
 }
 
@@ -50,7 +46,6 @@ System::Void QuakeLiveRcon::Commands::addCommand_Click(System::Object^  sender, 
 System::Void QuakeLiveRcon::Commands::editCommand_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->lineNum = this->selectedLine;
 	this->entryLabel = gcnew String("Edit the stored command");
-	//this->editText = gcnew String(this->ini->getValue("comands", System::Convert::ToString(this->lineNum)));
 	this->editText = this->commandList->Text;
 	this->editSelectedCommand(this->lineNum, this->commandEntry());
 }
@@ -60,7 +55,6 @@ System::Void QuakeLiveRcon::Commands::deleteCommand_Click(System::Object^  sende
 }
 
 System::Void QuakeLiveRcon::Commands::sendCommand_Click(System::Object^  sender, System::EventArgs^  e) {
-	//this->commandText = this->commandList->Text;
 	if (System::String::Compare(this->commandText, "")) {
 		QuakeLiveRcon::QLRcon::addToSendCommands(this->tab, this->commandText);
 	}
@@ -71,13 +65,10 @@ System::Void QuakeLiveRcon::Commands::sendCommand_Click(System::Object^  sender,
 
 System::Void QuakeLiveRcon::Commands::moveUp_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (this->selectedLine > 0) {
-		//MessageBox::Show("Values: " + this->selectedLine +  " " + this->commandList->Items[this->selectedLine]->ToString() + " " +
-		//	(this->selectedLine - 1) + " " + this->commandList->Items[this->selectedLine - 1]->ToString(), "Entry", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		this->swapCommands(this->selectedLine, this->commandList->Items[this->selectedLine]->ToString(),
 			(this->selectedLine - 1), this->commandList->Items[this->selectedLine - 1]->ToString());
 		int tempLineNum = this->selectedLine;
 		this->commandList->ClearSelected();
-		//this->selectedLine--;
 		this->fillCommandBox();
 		this->commandList->SetSelected(tempLineNum - 1, true);
 	}
@@ -89,7 +80,6 @@ System::Void QuakeLiveRcon::Commands::moveDown_Click(System::Object^  sender, Sy
 			(this->selectedLine + 1), this->commandList->Items[this->selectedLine + 1]->ToString());
 		int tempLineNum = this->selectedLine;
 		this->commandList->ClearSelected();
-		//this->selectedLine--;
 		this->fillCommandBox();
 		this->commandList->SetSelected(tempLineNum + 1, true);
 	}
@@ -152,12 +142,9 @@ System::String^ QuakeLiveRcon::Commands::commandEntry() {
 	// Show entryDialog as a modal dialog and determine if DialogResult = OK.
 	if (entryDialog->ShowDialog(this) == System::Windows::Forms::DialogResult::OK)
 	{
-		//MessageBox::Show(entryDialog->text->Text, "Entry", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		// Read the contents of entryDialog's text TextBox.
 		entry = entryDialog->text->Text;
 	}
-
-	//entryDialog->Close();
 
 	delete entryDialog;
 	return entry;

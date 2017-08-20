@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -25,8 +25,6 @@ int main(array<String^>^ args) {
 ///Contructor
 QuakeLiveRcon::QLRcon::QLRcon(void) {
 	InitializeComponent();
-
-	//this->Text += " : Version " + this->ProductVersion;
 
 	this->serverTabs = gcnew array<System::Windows::Forms::TabPage^>(MAX_SERVERS) {
 		this->rcon0, this->rcon1, this->rcon2, this->rcon3, this->rcon4, this->rcon5,
@@ -146,22 +144,9 @@ QuakeLiveRcon::QLRcon::QLRcon(void) {
 	}
 
 	this->color = gcnew array<int>(MAX_SERVERS);
-	//for (int i = 0; i < MAX_SERVERS; i++) {
-	//	this->color[i] = NULL;
-	//}
 	this->pos = gcnew array<int>(MAX_SERVERS);
-	//for (int i = 0; i < MAX_SERVERS; i++) {
-	//	this->pos[i] = NULL;
-	//}
 	this->nextPos = gcnew array<int>(MAX_SERVERS);
-	//for (int i = 0; i < MAX_SERVERS; i++) {
-	//	this->nextPos[i] = NULL;
-	//}
 	this->nextColor = gcnew array<int>(MAX_SERVERS);
-	//for (int i = 0; i < MAX_SERVERS; i++) {
-	//	this->nextColor[i] = NULL;
-	//}
-	//array<QuakeLiveRcon::QLRcon::ObjectArgReturningVoidDelegate^>^ callAgain;
 	this->callAgain = gcnew array<QuakeLiveRcon::QLRcon::ObjectArgReturningVoidDelegate^>(MAX_SERVERS);
 	this->msgAgain = gcnew array<QuakeLiveRcon::QLRcon::MessageArgReturningVoidDelegate^>(MAX_SERVERS);
 
@@ -215,17 +200,6 @@ QuakeLiveRcon::QLRcon::~QLRcon() {
 		delete components;
 	}
 
-	//for (int i = 0; i < MAX_SERVERS; i++) {
-	//	if (this->tabs[i] == 1) {
-	//		bool wait = this->closeOut();
-	//		break;
-	//	}
-	//	if (this->logServer[i]) {
-	//		bool wait = this->closeOut();
-	//		break;
-	//	}
-	//}
-
 	delete this->tabs;
 	delete this->tabLocation;
 	delete this->commandEntries;
@@ -236,28 +210,6 @@ QuakeLiveRcon::QLRcon::~QLRcon() {
 	delete this->commands;
 	delete this->sendCommands;
 	delete this->settingsArray;
-
-	///delete this->connectedServers;
-	///delete this->serverNames;
-	///delete this->logServer;
-	///delete this->eventKeys;
-	///delete this->eventNames;
-	///delete this->disconnect;
-	//delete this->serverTabs;
-	//delete this->outBox;
-	//delete this->inBox;
-	//delete this->buildLines;
-	//delete this->logServerWriter;
-	///delete this->serverConnectionThread;
-	///delete this->gamePort;
-	///delete this->GamePortThread;
-	//delete this->outputRClick;
-	//delete this->rClickItem1;
-	//delete this->rClickItem2;
-	//delete this->rClickItem3;
-	//delete this->rClickItem4;
-	//delete this->rClickItem5;
-	//delete this->rClickItem6;
 }
 
 ///Form User Interface Functions
@@ -275,8 +227,6 @@ System::Void QuakeLiveRcon::QLRcon::rconTabs_Click(System::Object^  sender, Syst
 		this->activeTab = tabName;
 		int tab = this->getRconTabNumber(this->activeTab);
 		this->updateServerTabInfo(tab);
-		//MessageBox::Show(activeTab, "Tab", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		//Scroll to the bottom of the output (window is ~34 lines)
 		int currentLine = (int)SendMessage(*reinterpret_cast<HWND *>(&this->outBox[tab]->Handle), EM_GETFIRSTVISIBLELINE, 0, 0);
 		int lineCount = (int)SendMessage(*reinterpret_cast<HWND *>(&this->outBox[tab]->Handle), EM_GETLINECOUNT, 0, 0);
 		SendMessage(*reinterpret_cast<HWND *>(&this->outBox[tab]->Handle), EM_LINESCROLL, 0, lineCount - currentLine - 34);
@@ -342,10 +292,8 @@ void QuakeLiveRcon::QLRcon::OnEditServersFormClosed(Object^ sender, System::Wind
 }
 
 void QuakeLiveRcon::QLRcon::OnStatusFormClosed(Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
-	//this->GameStatsThread->Abort();
 	delete this->GameStatsThread;
 	this->GameStatsThread = nullptr;
-	//here;
 }
 
 void QuakeLiveRcon::QLRcon::loadSettings() {
@@ -1086,7 +1034,6 @@ System::Void QuakeLiveRcon::QLRcon::connect_Click(System::Object^  sender, Syste
 			String^ serverIpPort = this->connectedServers[i];
 
 			if (!String::Compare(ipPort, serverIpPort)) {
-				//MessageBox::Show(System::Convert::ToString(this->tabLocation[i]), "Tab", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 				this->rconTabs->SelectedIndex = this->tabLocation[i];
 				this->serverName->Text = this->serverNames[i];
 				this->IPLabel->Text = ipPort;
@@ -1130,7 +1077,6 @@ System::Void QuakeLiveRcon::QLRcon::connect_Click(System::Object^  sender, Syste
 		MessageBox::Show("All available connections are in use.Close a server tab to be able to connect to another server.",
 			"No Available Connection Tabs", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	}
-	//MessageBox::Show("End", "End", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 
 	this->viewServerTabButtons();
 	delete ipPort;
@@ -1240,7 +1186,6 @@ void QuakeLiveRcon::QLRcon::startStatusWindowProcess() {
 		this->GameStatsThreadTries++;
 		this->GameStatsThread->Abort();
 		this->startStatusWindowProcess();
-		//this->openStatusWindow(this->connectedServers[this->rClickTab]);
 	}
 	else if (this->GameStatsThreadTries >= 10) {
 		MessageBox::Show("A problem occurred with the connection attempt. Please try again. Restart the program if the problem persists.",
@@ -1301,11 +1246,9 @@ void QuakeLiveRcon::QLRcon::openStatusWindow(Object^ tab) {
 			info[1] = this->statsConnectInfo[serverTab, 0];
 			found = true;
 		}
-		//System::Threading::Thread::Sleep(1);
 		this->GameStatsThread->Sleep(1);
 	}
 
-	//MessageBox::Show("Info " + this->statsConnectInfo[serverTab, 0] + " : " + this->statsConnectInfo[serverTab, 1], "QLRcon", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	if (found) {
 		//Creates the instance of the status Form
 		Status ^ statusWindow = gcnew Status(info);
@@ -1344,9 +1287,6 @@ System::Void QuakeLiveRcon::QLRcon::output0_MouseDown(System::Object^  sender, S
 		delete sectionArray;
 		sectionArray = nullptr;
 	}
-	//if (e->Button == System::Windows::Forms::MouseButtons::Left) {
-	//	here;
-	//}
 }
 System::Void QuakeLiveRcon::QLRcon::output0_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e) {
 	e->Handled = true;
@@ -1940,7 +1880,6 @@ void QuakeLiveRcon::QLRcon::loadServersToComboBox() {
 
 void QuakeLiveRcon::QLRcon::autoConectServers() {
 	for each (String^ server in this->savedServers) {
-		//MessageBox::Show(server, "Server", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		if (QuakeLiveRcon::ServersEdit::isServerIpPort(server) && this->ini->isTrue(server, "connect")) {
 			this->conectServer(server);
 		}
@@ -2105,7 +2044,6 @@ String^ QuakeLiveRcon::QLRcon::getCommandEntry(int tab, String^ line, String^ di
 		}
 	}
 	else {
-		//this->output0->AppendText("Not Matched\n");
 		command = this->commands[tab, 0];
 	}
 
@@ -2183,7 +2121,6 @@ void QuakeLiveRcon::QLRcon::serverConnection(int server, String^ action) {
 	String^ ip = sectionArray[0];
 	String^ port = sectionArray[1];
 	String^ password = this->ini->getValue(ipPort, "password");
-	//TimeSpan waitTime = TimeSpan(0, 0, 1); //wait 1 second
 
 	if (!System::String::Compare(action, L"connect")) {
 		if (this->rconBooleans[0] && this->logServer[server])
@@ -2260,7 +2197,7 @@ void QuakeLiveRcon::QLRcon::updateServerTabInfo(int selectedTab) {
 	}
 	else
 		tabName = name;
-	//MessageBox::Show(System::Convert::ToString(this->tabs[selectedTab]), "Tab: " + System::Convert::ToString(selectedTab), MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+	
 	if (this->tabs[selectedTab] == -1) {
 		this->disconnectTab->Text = "Reconnect Current Tab";
 	}
@@ -2335,7 +2272,6 @@ void QuakeLiveRcon::QLRcon::updateTabLocations() {
 //adds a tab to be used for a new server connection
 void QuakeLiveRcon::QLRcon::addTab(int add) {
 	if (this->rconTabs->TabPages->Contains(this->serverTabs[add])) {
-		//MessageBox::Show("Already Here", "Tab", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		this->rconTabs->SelectedIndex = this->tabLocation[add];
 	}
 	else {
@@ -2347,7 +2283,6 @@ void QuakeLiveRcon::QLRcon::addTab(int add) {
 
 //removes a tab when no longer used for a server conneciton
 void QuakeLiveRcon::QLRcon::removeTab(int remove) {
-	//MessageBox::Show(System::Convert::ToString(remove), "Tab", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	this->outBox[remove]->ResetText();
 	this->inBox[remove]->ResetText();
 	this->rconTabs->Controls->Remove(this->serverTabs[remove]);
@@ -2404,7 +2339,7 @@ void QuakeLiveRcon::QLRcon::connectToGameServer(Object^ tab) {
 		this->GamePortThreadTries++;
 		if (String::Compare(this->statsConnectInfo[args->Item1, 0], ""))
 			portFound = true;
-		//System::Threading::Thread::Sleep(1);
+
 		this->GamePortThread->Sleep(1);
 	}
 	if (portFound) {
@@ -2442,19 +2377,12 @@ void QuakeLiveRcon::QLRcon::connectToServer(Object^ parameters) {
 
 	bool registered = false;
 	void * context = zmq_ctx_new();
-	//assert(context);
 	void * socket = zmq_socket(context, ZMQ_DEALER);
-	//assert(socket);
 
 	// monitor
 	zmq_socket_monitor(socket, server, 0);
-	//int rc = zmq_socket_monitor(socket, server, 0);
-	//assert(rc == -1);
-	//assert(zmq_errno() == EPROTONOSUPPORT);
 
 	zmq_socket_monitor(socket, "inproc://monitor-socket", ZMQ_EVENT_ALL);
-	//rc = zmq_socket_monitor(socket, "inproc://monitor-socket", ZMQ_EVENT_ALL);
-	//assert(rc == 0);
 
 	if (String::Compare(args->Item3, "")) {
 		//convert password to char*
@@ -2505,7 +2433,6 @@ void QuakeLiveRcon::QLRcon::connectToServer(Object^ parameters) {
 	zmq_pollitem_t pollset[1];
 	pollset[0].socket = server_mon;
 	pollset[0].events = ZMQ_POLLIN;	
-	//= { { *server_mon, 0, ZMQ_POLLIN, 0 } };
 
 	bool goodEvent;
 	char * command = nullptr;
@@ -2607,13 +2534,6 @@ void QuakeLiveRcon::QLRcon::connectToServer(Object^ parameters) {
 					catch (...) {
 						break;
 					}
-
-					//int more = 0;           //  Multipart detection
-					//size_t more_size = sizeof(more);
-					//zmq_getsockopt(socket, ZMQ_RCVMORE, &more, &more_size);
-					////socket->getsockopt(ZMQ_RCVMORE, &more, &more_size);
-					//if (!more)
-					//	break;              //  Last message part
 				}
 			}
 			catch (...) {
@@ -2644,7 +2564,6 @@ void QuakeLiveRcon::QLRcon::connectToServer(Object^ parameters) {
 	delete command;
 	command = NULL;
 	delete eventInfo;
-	//eventInfo = nullptr;
 	this->displayText(args->Item4, "Disconnected from the server.\n");
 	delete args;
 	args = nullptr;
@@ -2789,7 +2708,6 @@ void QuakeLiveRcon::QLRcon::connectToStats(String^ ip, int tab) {
 
 	void * context = zmq_ctx_new();
 	void * socket = zmq_socket(context, ZMQ_SUB);
-	//MessageBox::Show(this->statsConnectInfo[tab, 0] + " : " + this->statsConnectInfo[tab, 1], "Info", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	if (String::Compare(this->statsConnectInfo[tab, 1], "")) {
 		//convert password to char*
 		pin_ptr<const wchar_t> wch2 = PtrToStringChars(this->statsConnectInfo[tab, 1]);
@@ -2824,8 +2742,6 @@ void QuakeLiveRcon::QLRcon::connectToStats(String^ ip, int tab) {
 		try {
 			size = zmq_recv(socket, buff, 4095, ZMQ_DONTWAIT);
 			if (size == -1 || size == 0) {
-				//if (zmq_errno() == EAGAIN) {}
-				//else {}
 				continue;
 			}
 
@@ -2836,7 +2752,6 @@ void QuakeLiveRcon::QLRcon::connectToStats(String^ ip, int tab) {
 
 				MultiByteToWideChar(CP_UTF8, 0, buff, -1, wstr, size + 1);
 				message = gcnew String(wstr);
-				//MessageBox::Show("Here", "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 				if (this->rconBooleans[5])
 					this->parseJson(message, tab, jObject, data, killer, victim);
 
@@ -2867,9 +2782,7 @@ void QuakeLiveRcon::QLRcon::parseJson(String^ message, int tab,
 	Newtonsoft::Json::Linq::JObject^ killer, Newtonsoft::Json::Linq::JObject^ victim) {
 	jObject = Linq::JObject::Parse(message);
 	String^ playerMsg = "";
-	//String^ dataInfo = jObject["DATA"]->ToString();
 	data = Linq::JObject::Parse(jObject["DATA"]->ToString());
-	//MessageBox::Show("Value: " + data["WARMUP"]->ToObject<bool>(), "Parse", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	bool warmup = data["WARMUP"]->ToObject<bool>();
 	if (warmup && !this->rconBooleans[8]) {
 		delete jObject;
@@ -2918,7 +2831,6 @@ void QuakeLiveRcon::QLRcon::parseJson(String^ message, int tab,
 	}
 	else if (this->rconBooleans[6] && !String::Compare(jObject["TYPE"]->ToString(), "PLAYER_DEATH")) {
 		victim = Linq::JObject::Parse(data["VICTIM"]->ToString());
-		//MessageBox::Show(data["MOD"]->ToString(), "Parse", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		if (this->JTokenIsNullOrEnpty(data["KILLER"])) {
 			if (!String::Compare(data["MOD"]->ToString(), "FALLING")) {
 				playerMsg = victim["NAME"]->ToString() + " ^1CRATERED^7";
@@ -2989,9 +2901,6 @@ void QuakeLiveRcon::QLRcon::parseJson(String^ message, int tab,
 				delete deathType;
 				deathType = nullptr;
 			}
-			else {
-				//playerMsg = killer["NAME"]->ToString() + " ^1CRATERED^7" + "\n";
-			}
 			delete killer;
 			killer = nullptr;
 		}
@@ -3013,8 +2922,6 @@ void QuakeLiveRcon::QLRcon::parseJson(String^ message, int tab,
 	jObject = nullptr;
 
 	if (String::Compare(playerMsg, "")) {
-		//Thread^ status = gcnew Thread(gcnew ParameterizedThreadStart(this, &QuakeLiveRcon::QLRcon::displayServerMessage));
-		//status->Start(Tuple::Create(tab, playerMsg));
 		this->displayServerMessage(tab, playerMsg);
 		if (this->rconBooleans[0] && this->logServer[tab]) {
 			if (this->rconBooleans[1])
@@ -3037,7 +2944,6 @@ bool QuakeLiveRcon::QLRcon::JTokenIsNullOrEnpty(Newtonsoft::Json::Linq::JToken^ 
 
 //Initial formatting of the messages received by the zmq socket
 String^ QuakeLiveRcon::QLRcon::formatMessage(String^ message, Int32 index) {
-	//String^ temp = message->Replace("\\n", "");
 	message = message->Replace("\\n", "");
 	message = message->Replace(Char::ToString((char)25), "");
 	message = message->Replace(Char::ToString((char)19), "");
@@ -3294,7 +3200,6 @@ void QuakeLiveRcon::QLRcon::displayServerMessage(int tab, String^ text) {
 //builds logfile lines to be sent to the LogFile class (if server logging is enabled)
 void QuakeLiveRcon::QLRcon::buildDisplayLine(int tab, String^ text, String^ displayLine, bool * printEntry) {
 	*printEntry = false;
-	//MessageBox::Show(text, "Message", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 
 	if (!System::String::Compare(text->Substring(text->Length - 1), (L"\n")) && this->buildDisplayLines[tab]->Count == 0) {
 		this->displayServerMessage(tab, text);
@@ -3399,7 +3304,6 @@ void QuakeLiveRcon::QLRcon::closeServerTab(int tab) {
 		this->connectedServers[tab] = nullptr;
 		this->removeTab(tab);
 		this->clearCommandEntries(tab);
-		//MessageBox::Show(System::Convert::ToString(this->rconTabs->TabCount), "Tab Count", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		if (this->rconTabs->TabCount) {
 			this->updateTabLocations();
 			this->activeTab = "{" + this->rconTabs->SelectedTab->Name + "}";

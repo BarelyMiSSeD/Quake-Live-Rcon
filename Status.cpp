@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -12,16 +12,9 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 QuakeLiveRcon::Status::Status(array<System::String^>^ info)
 {
 	InitializeComponent();
-	//
-	//TODO: Add the constructor code here
-	//
-	//MessageBox::Show("Info " + info[0] + " : " + info[1] + " : " + info[2] + " : " + info[3] + " : " + info[4], "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 
 	this->disconnect = false;
 	this->info = info;
-
-	///Sleep(5);
-	//this->connectToServer();
 }
 
 QuakeLiveRcon::Status::~Status()
@@ -46,187 +39,13 @@ System::Void QuakeLiveRcon::Status::close_Click(Object^  sender, System::EventAr
 }
 
 System::Void QuakeLiveRcon::Status::Window_Load(System::Object^  sender, System::EventArgs^  e) {
-	//MessageBox::Show("Here", "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-	//this->connectToServer();
+
 }
 
 System::Void QuakeLiveRcon::Status::Window_Shown(System::Object^  sender, System::EventArgs^  e) {
-	//MessageBox::Show("Here", "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-
 	this->statusThread = gcnew Thread(gcnew ThreadStart(this, &QuakeLiveRcon::Status::connectToServer));
 	this->statusThread->Start();
-
-	//this->connectToServer();
 }
-
-//this->info[0] is the IP; this->info[1] is the Game Port; this->info[2] is the Password; this->info[3] is the UUID; this->info[4] thru this->info[12] are the Colors
-/*void QuakeLiveRcon::Status::connectToServer() {
-	String^ serverString = "tcp://" + this->info[0] + ":" + this->info[1];
-	//convert ip:port to char*
-	pin_ptr<const wchar_t> wch = PtrToStringChars(serverString);
-	const size_t origsize = wcslen(wch) + 1;
-	const size_t newsize = origsize * 2;
-	size_t convertedChars = 0;
-	char * server = new char[newsize];
-	wcstombs_s(&convertedChars, server, newsize, wch, _TRUNCATE);
-	delete serverString;
-	wch = nullptr; //unhooks 'wch' from the memory now being used by 'server'
-
-	void * context = zmq_ctx_new();
-	void * socket = zmq_socket(context, ZMQ_SUB);
-
-	// monitor
-	zmq_socket_monitor(socket, server, 0);
-	zmq_socket_monitor(socket, "inproc://monitor-socket", ZMQ_EVENT_ALL);
-
-	if (String::Compare(this->info[2], "")) {
-		//convert password to char*
-		pin_ptr<const wchar_t> wch2 = PtrToStringChars(this->info[2]);
-		const size_t origsize2 = wcslen(wch2) + 1;
-		const size_t newsize2 = origsize2 * 2;
-		size_t convertedChars2 = 0;
-		char * pass = new char[newsize2];
-		wcstombs_s(&convertedChars2, pass, newsize2, wch2, _TRUNCATE);
-		wch2 = nullptr;
-	
-		//set the connect username in the socket
-		zmq_setsockopt(socket, ZMQ_PLAIN_USERNAME, "stats", 6);
-		zmq_setsockopt(socket, ZMQ_ZAP_DOMAIN, "stats", 6);
-		//set the connect password in the socket
-		zmq_setsockopt(socket, ZMQ_PLAIN_PASSWORD, pass, strlen(pass));
-	}
-
-	////convert uuid to char*
-	//pin_ptr<const wchar_t> wch3 = PtrToStringChars(this->info[3]);
-	//const size_t origsize3 = wcslen(wch3) + 1;
-	//const size_t newsize3 = origsize3 * 2;
-	//size_t convertedChars3 = 0;
-	//char * uuid = new char[newsize3];
-	//wcstombs_s(&convertedChars3, uuid, newsize3, wch3, _TRUNCATE);
-	//zmq_setsockopt(socket, ZMQ_IDENTITY, uuid, strlen(uuid));
-	//wch3 = nullptr;
-
-	//void * server_mon = zmq_socket(context, ZMQ_PAIR);
-	//zmq_connect(server_mon, "inproc://monitor-socket");
-	//zmq_connect(socket, server);
-	//int a = zmq_setsockopt(socket, ZMQ_SUBSCRIBE, "", 1);
-	//assert(a == 0);
-
-	int eventNum = NULL;
-
-	zmq_pollitem_t pollset[1];
-	pollset[0].socket = socket;
-	pollset[0].events = ZMQ_POLLIN;
-
-	bool goodEvent;
-	MessageBox::Show("Start", "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-	while (!this->disconnect) {
-
-		int poll = zmq_poll(pollset, 1, POLL_TIMEOUT * 1000);
-		//MessageBox::Show("Poll " + zmq_poll(pollset, 1, POLL_TIMEOUT), "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		//goodEvent = this->checkMonitor(server_mon, &eventNum);
-
-		// || !goodEvent
-		if (poll == 0) {
-			//MessageBox::Show("Poll " + poll, "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-			//this->serverStatus->AppendText("Here");
-			continue;
-		}
-
-		//MessageBox::Show("Here " + goodEvent + " : " + eventNum, "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		while (1) {
-			try {
-				zmq_msg_t * serverMsg = new zmq_msg_t;
-				zmq_msg_init(serverMsg);
-				zmq_recvmsg(socket, serverMsg, ZMQ_NOBLOCK);
-
-				int size = (int)zmq_msg_size(serverMsg);
-				char * buff = new char[size + 1];
-				memcpy(buff, zmq_msg_data(serverMsg), size);
-				//MessageBox::Show("Buff " + gcnew String(buff), "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-				zmq_msg_close(serverMsg);
-				delete serverMsg;
-				serverMsg = NULL;
-
-				if (buff != NULL && size > 0) {
-					buff[size] = '\0';
-					wchar_t * wstr = new wchar_t[size + 1];
-					MultiByteToWideChar(CP_UTF8, 0, buff, -1, wstr, size + 1);
-					String^ message = gcnew String(wstr);
-					//MessageBox::Show("Here " + message, "Stats", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-					//message = this->formatMessage(message);
-					//this->displayServerMessage(message);
-					this->serverStatus->AppendText(message);
-
-					//int64_t more;
-					//size_t more_size = sizeof more;
-					//zmq_getsockopt(socket, ZMQ_RCVMORE, &more, &more_size);
-
-					delete[] wstr;
-					wstr = NULL;
-					delete buff;
-					buff = NULL;
-					delete message;
-				}
-				else {
-					delete buff;
-					buff = NULL;
-					break;
-				}
-			}
-			catch (...) {
-				break;
-			}
-		}
-
-	}
-	//MessageBox::Show("Here " + System::Convert::ToString(args->Item4) + ".", "Out of While", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-	zmq_disconnect(socket, server);
-	//zmq_close(server_mon);
-	zmq_close(socket);
-	zmq_ctx_destroy(context);
-	return;
-}
-
-//Checks the monitor port for a server status message (called in the connectToServer function)
-bool QuakeLiveRcon::Status::checkMonitor(void *monitor, int* eventNum) {
-	*eventNum = -1;
-	int eventID = NULL;
-
-	while (1) {
-		try {
-			zmq_msg_t * monitorMsg = new zmq_msg_t;
-			zmq_msg_init(monitorMsg);
-			zmq_recvmsg(monitor, monitorMsg, ZMQ_NOBLOCK);
-
-			int size = (int)zmq_msg_size(monitorMsg);
-			char * buff = new char[size + 1];
-			memcpy(buff, zmq_msg_data(monitorMsg), size);
-
-			zmq_msg_close(monitorMsg);
-			delete monitorMsg;
-			monitorMsg = NULL;
-
-			if (buff != NULL && size > 0) {
-				if (eventID == NULL)
-					eventID = (short)buff[0];
-				delete buff;
-				buff = NULL;
-			}
-			else {
-				delete buff;
-				buff = NULL;
-				break;
-			}
-		}
-		catch (...) {
-			break;
-		}
-
-	}
-	*eventNum = (int)eventID;
-	return (*eventNum != -1);
-}*/
 
 void QuakeLiveRcon::Status::connectToServer() {
 	int count = 0;
@@ -328,7 +147,6 @@ void QuakeLiveRcon::Status::connectToServer() {
 //Initial formatting of the messages received by the zmq socket
 System::String^ QuakeLiveRcon::Status::formatMessage(System::String^ message) {
 	String^ temp = message->Replace("\\n", "");
-	//temp = temp->Replace("broadcast: print", "server:");
 
 	char c = 25;
 	String^ d = gcnew String(&c);
@@ -350,25 +168,6 @@ System::String^ QuakeLiveRcon::Status::formatMessage(System::String^ message) {
 
 	return temp;
 }
-
-////prints the messages generated internally by this program to the specified RichTextBox
-//void QuakeLiveRcon::Status::displayText(String^ text) {
-//	try {
-//		
-//		int lines = (int)SendMessage(*reinterpret_cast<HWND *>(&this->outBox[tab]->Handle), EM_GETLINECOUNT, 0, 0);
-//		if (lines >= this->maxLines) {
-//			this->outBox[tab]->Select(0, (int)SendMessage(*reinterpret_cast<HWND *>(&this->outBox[tab]->Handle), EM_LINEINDEX, lines - this->maxLines + this->linesRemove + 1, 0));
-//			this->outBox[tab]->SelectedText = "";
-//		}
-//		this->outBox[tab]->AppendText(text);
-//
-//		if (this->loggingEnabled && this->logServer[tab])
-//			this->logServerWriter[tab]->storeEntry(text);
-//	}
-//	catch (ObjectDisposedException^) {}
-//	catch (NullReferenceException^) {}
-//	return;
-//}
 
 //formats and prints the messages recieved from the server to the specified RichTextBox
 void QuakeLiveRcon::Status::displayServerMessage(System::String^ text) {

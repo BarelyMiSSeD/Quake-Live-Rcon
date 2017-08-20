@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -111,8 +111,6 @@ void LogFileWriter::writeToFile(int fullArray) {
 			fStream = gcnew FileStream(gcnew String(file + ".txt"), FileMode::Append, FileAccess::Write);
 		}
 
-		//FileStream^ fStream = gcnew FileStream(gcnew String(file + ".txt"), FileMode::OpenOrCreate, FileAccess::Write);
-
 		StreamWriter^ writeToFile = gcnew StreamWriter(fStream);
 
 		switch (fullArray) {
@@ -120,7 +118,6 @@ void LogFileWriter::writeToFile(int fullArray) {
 			for (int i = 0; i < MAX_LINES_STORED; i++) {
 				writeToFile->Write(this->writeArray1[i]);
 			}
-			//System::Array::Clear(this->writeArray1, 0, MAX_LINES_STORED);
 			this->writeArray1 = gcnew array<String^>(MAX_LINES_STORED);
 		}
 				break;
@@ -128,7 +125,6 @@ void LogFileWriter::writeToFile(int fullArray) {
 			for (int i = 0; i < MAX_LINES_STORED; i++) {
 				writeToFile->Write(this->writeArray2[i]);
 			}
-			//System::Array::Clear(this->writeArray2, 0, MAX_LINES_STORED);
 			this->writeArray2 = gcnew array<String^>(MAX_LINES_STORED);
 		}
 				break;
@@ -259,7 +255,6 @@ bool LogFileWriter::writeRemaining() {
 			for (int i = 0; i <= this->storedLines; i++) {
 				writeToFile->Write(this->writeArray1[i]);
 			}
-			//System::Array::Clear(this->writeArray1, 0, MAX_LINES_STORED);
 			delete this->writeArray1;
 			this->writeArray1 = gcnew array<String^>(MAX_LINES_STORED);
 			break;
@@ -267,7 +262,6 @@ bool LogFileWriter::writeRemaining() {
 			for (int i = 0; i <= this->storedLines; i++) {
 				writeToFile->Write(this->writeArray2[i]);
 			}
-			//System::Array::Clear(this->writeArray2, 0, MAX_LINES_STORED);
 			delete this->writeArray2;
 			this->writeArray2 = gcnew array<String^>(MAX_LINES_STORED);
 			break;

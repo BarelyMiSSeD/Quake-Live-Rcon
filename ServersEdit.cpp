@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -12,9 +12,6 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 ///Constructors
 QuakeLiveRcon::ServersEdit::ServersEdit() {
 	InitializeComponent();
-	//
-	//TODO: Add the constructor code here
-	//
 }
 QuakeLiveRcon::ServersEdit::ServersEdit(const char *file) {
 	InitializeComponent();
@@ -50,7 +47,6 @@ void QuakeLiveRcon::ServersEdit::fillComboBox() {
 	this->serverNames->Clear();
 	//get the alphabetical list display status
 	bool sortAlphabetically = this->ini->isTrue("main", "alphabetically");
-	//this->alphabeticSort->Checked = sortAlphabetically;
 
 	List<String^>^ sectionsTemp = gcnew List<String^>();
 	int count = 0;

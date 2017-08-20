@@ -2,7 +2,7 @@
 Quake Live Remote Console Program
 
 Created by James Weber
-Version 1.0.7.4 on 8/18/2017
+Version 1.0.7.5 on 8/20/2017
 
 This is released to everyone, as-is, there is no warranty or guarantee.
 */
@@ -11,9 +11,6 @@ This is released to everyone, as-is, there is no warranty or guarantee.
 
 QuakeLiveRcon::Settings::Settings(const char *file, String^ version) {
 	InitializeComponent();
-	//
-	//TODO: Add the constructor code here
-	//
 
 	this->ini = gcnew IniEditor(file);
 	this->website->Text = WEBSITE_URL;
@@ -392,8 +389,6 @@ System::Void QuakeLiveRcon::Settings::save_Click(System::Object^  sender, System
 
 	int max = System::Convert::ToInt32(this->maxLines->Value);
 	int remove = System::Convert::ToInt32(this->linesRemove->Value);
-	//MessageBox::Show("Max: " + max + ":" + INT_MAX + " Remove: " + remove + ":" + INT_MIN, "Values not Allowed",
-	//MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 
 	if (max >= remove) {
 		if (max != MAX_TEXTBOX_LINES || String::Compare(this->ini->getValue("main", "maxLines"), ""))
@@ -538,12 +533,10 @@ System::Void QuakeLiveRcon::Settings::deleteNow_Click(System::Object^  sender, S
 		if (String::Compare(section, "main") && this->ini->isTrue(section, "log")) {
 			array<String^>^ sectionArray = section->Split(':');
 			exclusions->Add(sectionArray[0] + "_" + sectionArray[1] + "_log.txt");
-			//MessageBox::Show(sectionArray[0] + "_" + sectionArray[1] + "_log.txt", "Exceptions", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		}
 	}
 
 	int days = this->ini->getInt("main", "deleteDays", 30);
-	//MessageBox::Show("Date: " + DateTime::Now.AddDays(-(double)days), "Days old", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 	LogFileWriter^ deleteFiles = gcnew LogFileWriter(LOG_FILE_LOCATION);
 	MessageBox::Show("Old Log File deletion proecess completed. There were " + deleteFiles->deleteOldFiles(DateTime::Now.AddDays(-(double)days), exclusions) +
 		" files deleted that were at least " + days + " days old.", "Log Files Deleted", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
@@ -715,7 +708,6 @@ void QuakeLiveRcon::Settings::fillTimeStampFormatCombobox() {
 	this->timeStampFormat->Items->Add("8/4/2017 11:45:30 AM"); //"G"
 	this->timeStampFormat->Items->Add("11:45 AM"); //"t"
 	this->timeStampFormat->Items->Add("11:45:30 AM"); //"T"
-	//this->timeStampFormat->Items->Add("");
 }
 
 void QuakeLiveRcon::Settings::clearWindow() {
