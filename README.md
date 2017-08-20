@@ -1,6 +1,6 @@
 # Quake-Live-Rcon
 
-Download Releases: https://github.com/BarelyMiSSeD/Quake-Live-Rcon/releases
+<b><u>Download Releases</b></u>: https://github.com/BarelyMiSSeD/Quake-Live-Rcon/releases
 
 This is my attempt at making an easy to use Remote Console Program for Quake Live.
 QuakeLiveRcon_x64_\*.\*.\*.\*.zip is for Windows 64 bit systems.
