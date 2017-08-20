@@ -2,6 +2,8 @@
 
 <b><u>Download Releases</b></u>: https://github.com/BarelyMiSSeD/Quake-Live-Rcon/releases
 
+<b>Visual C++ Redistributable 2015 is required for this application: https://www.microsoft.com/en-us/download/details.aspx?id=52685
+
 This is my attempt at making an easy to use Remote Console Program for Quake Live.
 QuakeLiveRcon_x64_\*.\*.\*.\*.zip is for Windows 64 bit systems.
 QuakeLiveRcon_x86_\*.\*.\*.\*.zip is for Windows 32 bit systems.
