@@ -1,6 +1,6 @@
 # Quake-Live-Rcon
 
-<b><u>Download Releases</b></u>: https://github.com/BarelyMiSSeD/Quake-Live-Rcon/releases
+<b><u>Download Latest Release</b></u>: https://github.com/BarelyMiSSeD/Quake-Live-Rcon/releases
 
 <b>Visual C++ Redistributable 2015</b> is required for this application. Try running it first. If it won't run download and install Visual C++ here: https://www.microsoft.com/en-us/download/details.aspx?id=52685
 
